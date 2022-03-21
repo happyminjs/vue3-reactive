@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="app2"></div>
+  
+  <!-- <script src="/node_modules/@vue/reactivity/dist/reactivity.global.js"></script> -->
+  <!-- <script src="/dist/vue.js"></script> -->
+  <!-- <script>
+    const { reactive, effect, ref, computed, toRefs } = VueReactivity;
+    
+    const state = reactive({
+      name: 'zz',
+      age: 11,
+      address: '朝阳酒仙桥',
+      a: { a: 1}
+    });
+    const state2 = reactive([1,4,5])
+    
+    effect(()=>{
+      return app.innerHTML = state.name + '今年' + state.age + '岁了'
+    });
+    effect(()=>{
+      // return app2.innerHTML = state2.length
+      return app2.innerHTML = state2
+    });
+    // // 当 effect函数中依赖的属性变化了， effect 会重新执行
+    setTimeout(() => {
+      // state.name = 'fff';
+      state2[5] = 5
+    }, 1000);
+  </script> -->
+
+
+  <!-- <script src="/node_modules/vue/dist/vue.global.js"></script> -->
+  <script src="/dist/vue.js"></script>
+  <script>
+    let { createApp, reactive, h } = Vue;
+    let App = {
+      // render(){},
+      setup(){
+        let state = reactive({name: 'zz', age: 11, flag: true});
+        setTimeout(()=>{
+          state.flag = !state.flag;
+        }, 2000)
+        return ()=>{ // render
+        // return h('div', {style: {color: 'red'}, class:'ddvvname'}, state.name+":" + state.age)
+        // return state.flag ? h('div', {style: {color: 'red'}}, 'hello') : h('p', {style: {color: 'blue'}}, 'world')
+        // return state.flag ? h('div', {style: {color: 'red'}, a:1}, 'hello') : h('div', {style: {color: 'blue'}},
+        // 'world')
+        return state.flag ?
+          h('div', {style: {color: 'red'}}, [
+            h('p', {key: 'a', style: {background: '#2fd32f'}}, 'aaaa'), 
+            h('p', {key: 'b', style: {background: '#2fd32f'}}, 'bbbb'), 
+
+            h('p', {key: 'c', style: {background: '#2fd32f'}},'cccc'),
+            h('p', {key: 'd', style: {background: '#2fd32f'}},'dddd'),
+            h('p', {key: 'e', style: {background: '#2fd32f'}},'eeee'),
+            h('p', {key: 'q', style: {background: '#2fd32f'}},'qqqq'),
+            h('p', {key: 'f', style: {background: '#2fd32f'}},'ffff'),
+            
+            h('p', {key: 'g', style: {background: '#2fd32f'}},'gggg'),
+            h('p', {key: 'h', style: {background: '#2fd32f'}},'hhhh'),
+          ]) : 
+          h('div', {style: {color: 'blue'}}, [
+            h('p', {key: 'a', style: {background: '#2fd32f'}}, 'aaaa'), 
+            h('p', {key: 'b', style: {background: '#2fd32f'}}, 'bbbb'), 
+
+            h('p', {key: 'd', style: {background: '#2fd32f'}},'dddd'),
+            h('p', {key: 'e', style: {background: '#2fd32f'}},'eeee'),
+            h('p', {key: 'f', style: {background: '#2fd32f'}},'ffff'),
+            h('p', {key: 'c', style: {background: '#2fd32f'}},'cccc'),
+            
+            h('p', {key: 'g', style: {background: '#2fd32f'}},'gggg'),
+            h('p', {key: 'h', style: {background: '#2fd32f'}},'hhhh'),
+          ])
+        }
+      }
+    }
+    // 组件是怎样渲染的， 即初始化流程
+    // vue3中是两个包： runtime-dom(针对浏览器平台)   runtime-core(核心包)
+    createApp(App).mount('#app')
+  </script>
+
+</body>
+</html>
